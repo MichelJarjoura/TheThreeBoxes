@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sharpen/Models/box-model.dart';
 import 'package:sharpen/constants.dart';
+import 'package:sharpen/controllers/review_controller.dart';
 import 'package:sharpen/widgets/add_card.dart';
 import 'package:sharpen/widgets/box_card.dart';
 import 'package:sharpen/widgets/start_card.dart';
@@ -11,6 +13,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(ReviewController());
 
     DateTime now = DateTime.now();
     String formattedDate3 = DateFormat('MMMM dd, yyyy').format(now);
@@ -18,55 +21,44 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsetsGeometry.symmetric(horizontal: 20,vertical: 25),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(formattedDate3),
-                  Text("Hello Kinan",
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 25),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(formattedDate3),
+                Text(
+                  "Hello Kinan",
                   style: TextStyle(
                     color: AppColors.text,
                     fontSize: 35,
-                    fontWeight: FontWeight.bold
+                    fontWeight: FontWeight.bold,
                   ),
-                  ),
-
-                  SizedBox(height:20),
-
-                  StartCard(),
-
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 20.0),
-                    child: Text("your boxes",
-                    style: TextStyle(
+                ),
+                const SizedBox(height: 20),
+                const StartCard(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20.0),
+                  child: Text(
+                    "your boxes",
+                    style: const TextStyle(
                       fontSize: 20,
-                      fontWeight: FontWeight(500),
-                    ),),
-                  ),
-
-
-                  for(BoxModel box in boxes)
-                    Padding(
-                      padding: EdgeInsetsGeometry.directional(bottom: 20),
-                      child: BoxCard(box: box),
+                      fontWeight: FontWeight.w500,
                     ),
-
-
-                  SizedBox(height:25),
-
-                  AddCard()
-                  
-                ],
-              ),
+                  ),
+                ),
+                for (BoxModel box in boxes)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 20),
+                    child: BoxCard(box: box),
+                  ),
+                const SizedBox(height: 25),
+                const AddCard(),
+              ],
             ),
+          ),
         ),
       ),
-
     );
   }
 }
-
-
-
-

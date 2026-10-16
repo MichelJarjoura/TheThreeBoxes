@@ -1,9 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:sharpen/controllers/review_controller.dart';
 import 'package:sharpen/widgets/primary_button.dart';
 import '../constants.dart';
 
-class AddCardBottomSheet extends StatelessWidget {
+class AddCardBottomSheet extends StatefulWidget {
   const AddCardBottomSheet({super.key});
+
+  @override
+  State<AddCardBottomSheet> createState() => _AddCardBottomSheetState();
+}
+
+class _AddCardBottomSheetState extends State<AddCardBottomSheet> {
+  final _questionController = TextEditingController();
+  final _answerController = TextEditingController();
+
+  @override
+  void dispose() {
+    _questionController.dispose();
+    _answerController.dispose();
+    super.dispose();
+  }
+
+  void _saveCard() {
+    final question = _questionController.text;
+    final answer = _answerController.text;
+
+    if (question.trim().isEmpty || answer.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please fill in both question and answer")),
+      );
+      return;
+    }
+
+    final controller = Get.find<ReviewController>();
+    controller.addFlashCard(1, question, answer);
+    Navigator.pop(context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,79 +52,74 @@ class AddCardBottomSheet extends StatelessWidget {
           ),
           child: SingleChildScrollView(
             child: Column(
-              mainAxisSize: MainAxisSize.min ,
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Row(
-                children: [Text("New Card",style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                ),),
-                  Spacer(),
-                  TextButton(
-                      onPressed: (){Navigator.pop(context);},
-                      child:Text("Cancel",
+              children: [
+                Row(
+                  children: [
+                    const Text(
+                      "New Card",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const Spacer(),
+                    TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        "Cancel",
                         style: TextStyle(
-                            color: AppColors.textMuted,
-                            fontSize: 15
-                        ),) )
-                ],
-              ),
+                          color: AppColors.textMuted,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 Padding(
-                  padding: const EdgeInsetsGeometry.directional(top: 20,bottom: 10),
-                  child: Text("Question",
-                  style: TextStyle(
-                    fontSize: 15
-                  )
-                          ),
-                )
-                ,
+                  padding: const EdgeInsets.only(top: 20, bottom: 10),
+                  child: Text(
+                    "Question",
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
                 TextField(
-                  maxLines:5,
-                  minLines:3,
+                  controller: _questionController,
+                  maxLines: 5,
+                  minLines: 3,
                   decoration: InputDecoration(
-      
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                     hintText: "type the question you want to recall",
                   ),
                 ),
-      
                 Padding(
-                  padding: const EdgeInsetsGeometry.directional(top: 20,bottom: 10),
-                  child: Text("Answer",
-                      style: TextStyle(
-                          fontSize: 15
-                      )
+                  padding: const EdgeInsets.only(top: 20, bottom: 10),
+                  child: Text(
+                    "Answer",
+                    style: TextStyle(fontSize: 15),
                   ),
                 ),
-      
                 TextField(
-      
+                  controller: _answerController,
                   minLines: 3,
                   maxLines: 5,
-      
-      
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10)
+                      borderRadius: BorderRadius.circular(10),
                     ),
                     hintText: "type the answer you want to recall",
-      
                   ),
                 ),
-                
                 Padding(
-                  padding: const EdgeInsets.only(
-                    top: 40
-                  ),
+                  padding: const EdgeInsets.only(top: 40),
                   child: PrimaryButton(
-                     onPressed:(){}
-                  ,text: "save card"),
-                )
-      
-      
-      
+                    onPressed: _saveCard,
+                    text: "save card",
+                  ),
+                ),
               ],
             ),
           ),

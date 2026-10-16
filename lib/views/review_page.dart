@@ -12,10 +12,8 @@ class ReviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(ReviewController());
-    controller.reset(); // Reset to starting point (0) whenever review opens
-
-    final isEmpty = box.flashCards.isEmpty;
+    final controller = Get.find<ReviewController>();
+    controller.reset();
 
     return Scaffold(
       body: SafeArea(
@@ -39,11 +37,13 @@ class ReviewPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Obx(() {
+                            final totalCards = controller.getNumOfCardsOnBox(box.id);
+                            final isEmpty = totalCards == 0;
                             final currentCardNum = isEmpty
                                 ? 0
-                                : (controller.questNum.value + 1).clamp(0, box.flashCards.length);
+                                : (controller.questNum.value + 1).clamp(0, totalCards);
                             return Text(
-                              "${box.title} . Card $currentCardNum of ${box.flashCards.length}",
+                              "${box.title} . Card $currentCardNum of $totalCards",
                             );
                           }),
                           Padding(
@@ -53,9 +53,11 @@ class ReviewPage extends StatelessWidget {
                               bottom: 8,
                             ),
                             child: Obx(() {
+                              final totalCards = controller.getNumOfCardsOnBox(box.id);
+                              final isEmpty = totalCards == 0;
                               final progress = isEmpty
                                   ? 0.0
-                                  : ((controller.questNum.value + 1) / box.flashCards.length).clamp(0.0, 1.0);
+                                  : ((controller.questNum.value + 1) / totalCards).clamp(0.0, 1.0);
                               return LinearProgressIndicator(
                                 value: progress,
                                 valueColor: AlwaysStoppedAnimation<Color>(AppColors.fill),
@@ -71,80 +73,83 @@ class ReviewPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
-                Obx(
-                  () {
-                    final hasCards = !isEmpty &&
-                        controller.questNum.value < box.flashCards.length;
-                    final questionText = hasCards
-                        ? box.flashCards[controller.questNum.value].question
-                        : "No cards available in this box.";
+                Obx(() {
+                  final boxCards = controller.getFlashCardsOfBox(box.id);
+                  final totalCards = boxCards.length;
+                  final isEmpty = totalCards == 0;
+                  final hasCards = !isEmpty && controller.questNum.value < totalCards;
+                  final questionText = hasCards
+                      ? boxCards[controller.questNum.value].question
+                      : "No cards available in this box.";
 
-                    return SizedBox(
-                      width: double.infinity,
-                      height: 500,
-                      child: Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        color: AppColors.surface,
-                        child: Padding(
-                          padding: const EdgeInsets.all(20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Question:",
-                                style: TextStyle(
-                                  color: AppColors.textMuted,
-                                ),
+                  return SizedBox(
+                    width: double.infinity,
+                    height: 500,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      color: AppColors.surface,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "Question:",
+                              style: TextStyle(
+                                color: AppColors.textMuted,
                               ),
-                              const Divider(
-                                indent: 35,
-                                endIndent: 35,
-                                thickness: 0.4,
+                            ),
+                            const Divider(
+                              indent: 35,
+                              endIndent: 35,
+                              thickness: 0.4,
+                            ),
+                            const SizedBox(height: 10),
+                            Text(
+                              questionText,
+                              style: const TextStyle(
+                                fontSize: 25,
+                                fontWeight: FontWeight.bold,
                               ),
-                              const SizedBox(height: 10),
-                              Text(
-                                questionText,
-                                style: const TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                }),
                 const SizedBox(height: 30),
-                if (isEmpty)
-                  PrimaryButton(
-                    onPressed: () => Navigator.pop(context),
-                    text: "Go back",
-                  )
-                else
-                  SizedBox(
+                Obx(() {
+                  final totalCards = controller.getNumOfCardsOnBox(box.id);
+                  if (totalCards == 0) {
+                    return PrimaryButton(
+                      onPressed: () => Navigator.pop(context),
+                      text: "Go back",
+                    );
+                  }
+                  return SizedBox(
                     width: double.infinity,
                     child: Row(
                       children: [
                         Expanded(
                           child: PrimaryButton(
-                            onPressed: () => controller.nextQuest(box.flashCards.length),
+                            onPressed: () => controller.nextQuest(totalCards),
                             text: "Not yet",
                           ),
                         ),
                         const SizedBox(width: 20),
                         Expanded(
                           child: PrimaryButton(
-                            onPressed: () => controller.nextQuest(box.flashCards.length),
+                            onPressed: () => controller.nextQuest(totalCards),
                             text: "Got it",
                           ),
                         ),
                       ],
                     ),
-                  ),
+                  );
+                }),
               ],
             ),
           ),
