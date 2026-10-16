@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:sharpen/Models/box-model.dart';
+import 'package:sharpen/views/review_page.dart';
 import 'package:sharpen/widgets/primary_button.dart';
 import '../constants.dart';
 
 class StartCard extends StatelessWidget {
-
-
-
   const StartCard({super.key});
 
   @override
@@ -19,30 +18,51 @@ class StartCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("TODAY",style: TextStyle(
-                  color: AppColors.primary
-              ),),
-              SizedBox(height: 7,),
-              Text("12 cards to review",style: TextStyle(
+              Text(
+                "TODAY",
+                style: TextStyle(color: AppColors.primary),
+              ),
+              const SizedBox(height: 7),
+              Text(
+                "${boxes.fold(0, (sum, box) => sum + box.flashCards.length)} cards to review",
+                style: const TextStyle(
                   fontSize: 25,
-                  fontWeight: FontWeight.bold
-              )),
-              SizedBox(height: 7,),
-              Text("About 6 minutes ",
-                style: TextStyle(
-                    color: AppColors.textMuted
-                ),),
-              SizedBox(height: 20,),
-
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 7),
+              Text(
+                "About ${(boxes.fold(0, (sum, box) => sum + box.flashCards.length) * 0.5).ceil()} minutes",
+                style: TextStyle(color: AppColors.textMuted),
+              ),
+              const SizedBox(height: 20),
               PrimaryButton(
-                  onPressed: (){}
-              ,text: "Start review"),
-
+                onPressed: () {
+                  final activeBox = boxes.firstWhere(
+                    (b) => b.flashCards.isNotEmpty,
+                    orElse: () => boxes.first,
+                  );
+                  if (activeBox.flashCards.isEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text("No flashcards available to review!"),
+                      ),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ReviewPage(box: activeBox),
+                      ),
+                    );
+                  }
+                },
+                text: "Start review",
+              ),
             ],
           ),
         ),
       ),
-
     );
   }
 }

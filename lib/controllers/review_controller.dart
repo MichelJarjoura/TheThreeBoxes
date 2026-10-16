@@ -1,9 +1,18 @@
 import 'package:get/get.dart';
 
-class ReviewController extends GetxController{
+class ReviewController extends GetxController {
+  var questNum = 0.obs;
 
-  int questNum = 0.obs as int;
+  void nextQuest(int totalCards) {
+    if (totalCards == 0) return;
+    if (questNum.value < totalCards - 1) {
+      questNum.value++;
+    } else {
+      Get.back();
+    }
+  }
 
-void nextQuest(){questNum++;}
-
+  void reset() {
+    questNum.value = 0;
+  }
 }
