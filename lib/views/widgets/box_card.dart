@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sharpen/Models/box-model.dart';
 import 'package:sharpen/controllers/review_controller.dart';
-import 'package:sharpen/views/review_page.dart';
-import '../constants.dart';
+import 'package:sharpen/views/screens/review_page.dart';
+import '../../constants.dart';
 
 class BoxCard extends StatelessWidget {
   final BoxModel box;

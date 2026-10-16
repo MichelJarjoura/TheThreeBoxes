@@ -3,9 +3,9 @@ import 'package:get/get.dart';
 import 'package:sharpen/Models/box-model.dart';
 import 'package:sharpen/constants.dart';
 import 'package:sharpen/controllers/review_controller.dart';
-import 'package:sharpen/widgets/add_card.dart';
-import 'package:sharpen/widgets/box_card.dart';
-import 'package:sharpen/widgets/start_card.dart';
+import 'package:sharpen/views/widgets/add_card.dart';
+import 'package:sharpen/views/widgets/box_card.dart';
+import 'package:sharpen/views/widgets/start_card.dart';
 import 'package:intl/intl.dart';
 
 class HomePage extends StatelessWidget {

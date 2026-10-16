@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:sharpen/Models/box-model.dart';
 import 'package:sharpen/constants.dart';
 import 'package:sharpen/controllers/review_controller.dart';
-import 'package:sharpen/widgets/primary_button.dart';
+import 'package:sharpen/views/widgets/primary_button.dart';
 
 class ReviewPage extends StatelessWidget {
   final BoxModel box;

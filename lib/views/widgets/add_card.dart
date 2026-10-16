@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../constants.dart';
+import '../../constants.dart';
 import 'bottom_sheet.dart';
 
 class AddCard extends StatelessWidget {

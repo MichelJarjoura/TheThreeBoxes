@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:sharpen/views/home_page.dart';
+import 'package:sharpen/views/screens/home_page.dart';
 
 void main() {
   runApp(const MyApp());
