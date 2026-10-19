@@ -16,6 +16,22 @@ class FlashCard {
       answer ?? this.answer,
     );
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'boxId': boxId,
+      'question': question,
+      'answer': answer,
+    };
+  }
+
+  factory FlashCard.fromMap(Map<dynamic, dynamic> map) {
+    return FlashCard(
+      map['boxId'] as int,
+      map['question'] as String,
+      map['answer'] as String,
+    );
+  }
 }
 
 final List<FlashCard> initialFlashCards = [
