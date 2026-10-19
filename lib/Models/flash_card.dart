@@ -34,10 +34,3 @@ class FlashCard {
   }
 }
 
-final List<FlashCard> initialFlashCards = [
-  FlashCard(1, "Why are you gay1", "Because .. "),
-  FlashCard(1, "Why are you gay2", "Because .. "),
-  FlashCard(1, "Why are you gay3", "Because .. "),
-  FlashCard(1, "Why are you gay4", "Because .. "),
-  FlashCard(1, "Why are you gay5", "Because .. "),
-];
