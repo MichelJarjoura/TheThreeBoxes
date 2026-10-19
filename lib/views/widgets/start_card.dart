@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sharpen/Models/box-model.dart';
-import 'package:sharpen/controllers/review_controller.dart';
+import 'package:sharpen/controllers/flashcard_controller.dart';
 import 'package:sharpen/views/screens/review_page.dart';
 import 'package:sharpen/views/widgets/primary_button.dart';
 import '../../constants.dart';
@@ -11,7 +11,7 @@ class StartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ReviewController>();
+    final controller = Get.find<FlashCardController>();
 
     return Card(
       color: AppColors.surface,
@@ -28,7 +28,7 @@ class StartCard extends StatelessWidget {
               ),
               const SizedBox(height: 7),
               Obx(() => Text(
-                "${controller.getNumOfFlashCards()} cards to review",
+                "${controller.getTotalCards()} cards to review",
                 style: const TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.bold,
@@ -36,7 +36,7 @@ class StartCard extends StatelessWidget {
               )),
               const SizedBox(height: 7),
               Obx(() => Text(
-                "About ${(controller.getNumOfFlashCards() * 0.5).ceil()} minutes",
+                "About ${(controller.getTotalCards() * 0.5).ceil()} minutes",
                 style: TextStyle(color: AppColors.textMuted),
               )),
               const SizedBox(height: 20),

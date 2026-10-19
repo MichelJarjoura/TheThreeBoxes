@@ -4,6 +4,18 @@ class FlashCard {
   final String answer;
 
   FlashCard(this.boxId, this.question, this.answer);
+
+  FlashCard copyWith({
+    int? boxId,
+    String? question,
+    String? answer,
+  }) {
+    return FlashCard(
+      boxId ?? this.boxId,
+      question ?? this.question,
+      answer ?? this.answer,
+    );
+  }
 }
 
 final List<FlashCard> initialFlashCards = [

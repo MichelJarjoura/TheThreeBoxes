@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:sharpen/controllers/review_controller.dart';
+import 'package:sharpen/controllers/flashcard_controller.dart';
 import 'package:sharpen/views/widgets/primary_button.dart';
 import '../../constants.dart';
 
@@ -33,7 +33,7 @@ class _AddCardBottomSheetState extends State<AddCardBottomSheet> {
       return;
     }
 
-    final controller = Get.find<ReviewController>();
+    final controller = Get.find<FlashCardController>();
     controller.addFlashCard(1, question, answer);
     Navigator.pop(context);
   }

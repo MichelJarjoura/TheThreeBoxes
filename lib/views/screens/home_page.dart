@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sharpen/Models/box-model.dart';
 import 'package:sharpen/constants.dart';
-import 'package:sharpen/controllers/review_controller.dart';
+import 'package:sharpen/controllers/flashcard_controller.dart';
 import 'package:sharpen/views/widgets/add_card.dart';
 import 'package:sharpen/views/widgets/box_card.dart';
 import 'package:sharpen/views/widgets/start_card.dart';
@@ -13,7 +13,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.put(ReviewController());
+    Get.put(FlashCardController());
 
     DateTime now = DateTime.now();
     String formattedDate3 = DateFormat('MMMM dd, yyyy').format(now);

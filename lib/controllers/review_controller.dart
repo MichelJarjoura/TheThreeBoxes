@@ -1,43 +1,51 @@
 import 'package:get/get.dart';
-import '../Models/flash_card.dart';
+import 'package:sharpen/Models/flash_card.dart';
+import 'package:sharpen/controllers/flashcard_controller.dart';
 
 class ReviewController extends GetxController {
+  final controller = Get.find<FlashCardController>();
+
+  var sessionCards = <FlashCard>[].obs;
   var questNum = 0.obs;
-  var flashcards = <FlashCard>[
-    FlashCard(1, "Why are you gay1", "Because .. "),
-    FlashCard(1, "Why are you gay2", "Because .. "),
-    FlashCard(1, "Why are you gay3", "Because .. "),
-    FlashCard(1, "Why are you gay4", "Because .. "),
-    FlashCard(1, "Why are you gay5", "Because .. "),
-  ].obs;
 
-  void nextQuest(int totalCards) {
-    if (totalCards == 0) return;
-    if (questNum.value < totalCards - 1) {
-      questNum.value++;
-    } else {
-      Get.back();
-    }
-  }
-
-  void reset() {
+  void initSession(int boxId) {
+    sessionCards.value = controller.getFlashCardsOfBox(boxId);
     questNum.value = 0;
   }
 
-  List<FlashCard> getFlashCardsOfBox(int boxId) {
-    return flashcards.where((card) => card.boxId == boxId).toList();
+  int get totalCards => sessionCards.length;
+
+  int currentCardNum(int boxId) {
+    if (totalCards == 0) return 0;
+    return (questNum.value + 1).clamp(0, totalCards);
   }
 
-  int getNumOfFlashCards() {
-    return flashcards.length;
+  double getProgressBarValue(int boxId) {
+    if (totalCards == 0) return 0.0;
+    return ((questNum.value + 1) / totalCards).clamp(0.0, 1.0);
   }
 
-  int getNumOfCardsOnBox(int boxId) {
-    return getFlashCardsOfBox(boxId).length;
+  String getQuestion(int boxId) {
+    if (sessionCards.isEmpty || questNum.value >= sessionCards.length) {
+      return "All questions reviewed!";
+    }
+    return sessionCards[questNum.value].question;
   }
 
-  void addFlashCard(int boxId, String question, String answer) {
-    if (question.trim().isEmpty || answer.trim().isEmpty) return;
-    flashcards.add(FlashCard(boxId, question.trim(), answer.trim()));
+  bool isFinished(int boxId) {
+    return sessionCards.isEmpty || questNum.value >= sessionCards.length;
+  }
+
+  void onAnswerPressed(int boxId, bool gotIt) {
+    if (isFinished(boxId)) return;
+
+    final currentCard = sessionCards[questNum.value];
+    controller.moveCardToBox(currentCard, gotIt);
+
+    questNum.value++;
+  }
+
+  bool totalCardsIsZero(int boxId) {
+    return totalCards == 0;
   }
 }

@@ -12,8 +12,8 @@ class ReviewPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ReviewController>();
-    controller.reset();
+    final reviewController = Get.put(ReviewController());
+    reviewController.initSession(box.id);
 
     return Scaffold(
       body: SafeArea(
@@ -37,13 +37,10 @@ class ReviewPage extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Obx(() {
-                            final totalCards = controller.getNumOfCardsOnBox(box.id);
-                            final isEmpty = totalCards == 0;
-                            final currentCardNum = isEmpty
-                                ? 0
-                                : (controller.questNum.value + 1).clamp(0, totalCards);
+                            var currentCardNum = reviewController.currentCardNum(box.id);
+                            var total = reviewController.totalCards;
                             return Text(
-                              "${box.title} . Card $currentCardNum of $totalCards",
+                              "${box.title} . Card $currentCardNum of $total",
                             );
                           }),
                           Padding(
@@ -53,13 +50,8 @@ class ReviewPage extends StatelessWidget {
                               bottom: 8,
                             ),
                             child: Obx(() {
-                              final totalCards = controller.getNumOfCardsOnBox(box.id);
-                              final isEmpty = totalCards == 0;
-                              final progress = isEmpty
-                                  ? 0.0
-                                  : ((controller.questNum.value + 1) / totalCards).clamp(0.0, 1.0);
                               return LinearProgressIndicator(
-                                value: progress,
+                                value: reviewController.getProgressBarValue(box.id),
                                 valueColor: AlwaysStoppedAnimation<Color>(AppColors.fill),
                                 color: AppColors.track,
                                 minHeight: 8,
@@ -74,14 +66,6 @@ class ReviewPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Obx(() {
-                  final boxCards = controller.getFlashCardsOfBox(box.id);
-                  final totalCards = boxCards.length;
-                  final isEmpty = totalCards == 0;
-                  final hasCards = !isEmpty && controller.questNum.value < totalCards;
-                  final questionText = hasCards
-                      ? boxCards[controller.questNum.value].question
-                      : "No cards available in this box.";
-
                   return SizedBox(
                     width: double.infinity,
                     height: 500,
@@ -108,7 +92,7 @@ class ReviewPage extends StatelessWidget {
                             ),
                             const SizedBox(height: 10),
                             Text(
-                              questionText,
+                              reviewController.getQuestion(box.id),
                               style: const TextStyle(
                                 fontSize: 25,
                                 fontWeight: FontWeight.bold,
@@ -122,8 +106,7 @@ class ReviewPage extends StatelessWidget {
                 }),
                 const SizedBox(height: 30),
                 Obx(() {
-                  final totalCards = controller.getNumOfCardsOnBox(box.id);
-                  if (totalCards == 0) {
+                  if (reviewController.totalCardsIsZero(box.id) || reviewController.isFinished(box.id)) {
                     return PrimaryButton(
                       onPressed: () => Navigator.pop(context),
                       text: "Go back",
@@ -135,14 +118,18 @@ class ReviewPage extends StatelessWidget {
                       children: [
                         Expanded(
                           child: PrimaryButton(
-                            onPressed: () => controller.nextQuest(totalCards),
+                            onPressed: () {
+                              reviewController.onAnswerPressed(box.id, false);
+                            },
                             text: "Not yet",
                           ),
                         ),
                         const SizedBox(width: 20),
                         Expanded(
                           child: PrimaryButton(
-                            onPressed: () => controller.nextQuest(totalCards),
+                            onPressed: () {
+                              reviewController.onAnswerPressed(box.id, true);
+                            },
                             text: "Got it",
                           ),
                         ),

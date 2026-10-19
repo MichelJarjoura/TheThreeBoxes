@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sharpen/Models/box-model.dart';
-import 'package:sharpen/controllers/review_controller.dart';
+import 'package:sharpen/controllers/flashcard_controller.dart';
 import 'package:sharpen/views/screens/review_page.dart';
 import '../../constants.dart';
 
@@ -15,7 +15,7 @@ class BoxCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.find<ReviewController>();
+    final controller = Get.find<FlashCardController>();
 
     return InkWell(
       onTap: () {
