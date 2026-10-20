@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:three_boxes/Models/box-model.dart';
 import 'package:three_boxes/controllers/flashcard_controller.dart';
-import 'package:three_boxes/views/screens/review_page.dart';
+import 'package:three_boxes/routes/app_routes.dart';
 import 'package:three_boxes/views/widgets/primary_button.dart';
-import '../../constants.dart';
+import '../../core/theme/app_colors.dart';
 
 class StartCard extends StatelessWidget {
   const StartCard({super.key});
@@ -53,12 +53,7 @@ class StartCard extends StatelessWidget {
                       ),
                     );
                   } else {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ReviewPage(box: activeBox),
-                      ),
-                    );
+                    Get.toNamed(AppRoutes.review, arguments: activeBox);
                   }
                 },
                 text: "Start review",

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+
 import 'package:three_boxes/Models/box-model.dart';
-import 'package:three_boxes/constants.dart';
-import 'package:three_boxes/controllers/flashcard_controller.dart';
+import 'package:three_boxes/core/theme/app_colors.dart';
 import 'package:three_boxes/views/widgets/add_card.dart';
 import 'package:three_boxes/views/widgets/box_card.dart';
 import 'package:three_boxes/views/widgets/start_card.dart';
@@ -11,10 +10,10 @@ import 'package:intl/intl.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
+
+
   @override
   Widget build(BuildContext context) {
-    Get.put(FlashCardController());
-
     DateTime now = DateTime.now();
     String formattedDate3 = DateFormat('MMMM dd, yyyy').format(now);
 

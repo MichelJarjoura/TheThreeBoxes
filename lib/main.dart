@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:three_boxes/views/screens/home_page.dart';
+import 'package:three_boxes/routes/app_pages.dart';
+import 'package:three_boxes/routes/app_routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,7 +29,8 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: GoogleFonts.nunitoTextTheme(),
       ),
-      home: const HomePage(),
+      initialRoute: AppRoutes.home,
+      getPages: AppPages.pages,
     );
   }
 }

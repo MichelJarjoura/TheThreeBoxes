@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:three_boxes/Models/box-model.dart';
 import 'package:three_boxes/controllers/flashcard_controller.dart';
-import 'package:three_boxes/views/screens/review_page.dart';
-import '../../constants.dart';
+import 'package:three_boxes/routes/app_routes.dart';
+import '../../core/theme/app_colors.dart';
 
 class BoxCard extends StatelessWidget {
   final BoxModel box;
@@ -27,10 +27,7 @@ class BoxCard extends StatelessWidget {
             ),
           );
         } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => ReviewPage(box: box)),
-          );
+          Get.toNamed(AppRoutes.review, arguments: box);
         }
       },
       child: SizedBox(

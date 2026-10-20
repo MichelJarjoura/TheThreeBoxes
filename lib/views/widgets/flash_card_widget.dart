@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:three_boxes/Models/box-model.dart';
-import '../../constants.dart';
+import '../../core/theme/app_colors.dart';
 import '../../controllers/review_controller.dart';
 
 class FlashCardWidget extends StatelessWidget {

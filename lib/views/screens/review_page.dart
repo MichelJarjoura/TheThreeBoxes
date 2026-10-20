@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:three_boxes/Models/box-model.dart';
-import 'package:three_boxes/constants.dart';
+import 'package:three_boxes/core/theme/app_colors.dart';
 import 'package:three_boxes/controllers/review_controller.dart';
 import 'package:three_boxes/views/widgets/flash_card_widget.dart';
 import 'package:three_boxes/views/widgets/primary_button.dart';
 
-class ReviewPage extends StatelessWidget {
-  final BoxModel box;
-  final reviewController = Get.put(ReviewController());
+class ReviewPage extends GetView<ReviewController> {
 
-  ReviewPage({super.key, required this.box});
+  final BoxModel box;
+
+  const ReviewPage({super.key, required this.box});
 
   @override
   Widget build(BuildContext context) {
 
+    final reviewController = controller;
     reviewController.initSession(box.id);
 
     return Scaffold(

@@ -1,5 +1,5 @@
 import 'dart:ui';
-import 'package:three_boxes/constants.dart';
+import 'package:three_boxes/core/theme/app_colors.dart';
 
 class BoxModel {
   final int id;

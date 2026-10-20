@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:three_boxes/controllers/flashcard_controller.dart';
 import 'package:three_boxes/views/widgets/primary_button.dart';
-import '../../constants.dart';
+import '../../core/theme/app_colors.dart';
 
 class AddCardBottomSheet extends StatefulWidget {
   const AddCardBottomSheet({super.key});
