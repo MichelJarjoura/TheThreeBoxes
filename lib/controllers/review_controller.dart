@@ -7,6 +7,7 @@ class ReviewController extends GetxController {
 
   var sessionCards = <FlashCard>[].obs;
   var questNum = 0.obs;
+  var answerIsRevealed = false.obs;
 
   void initSession(int boxId) {
     sessionCards.value = controller.getFlashCardsOfBox(boxId);
@@ -32,6 +33,13 @@ class ReviewController extends GetxController {
     return sessionCards[questNum.value].question;
   }
 
+  String getAnswer(int boxId) {
+    if (sessionCards.isEmpty || questNum.value >= sessionCards.length) {
+      return "All answers reviewed!";
+    }
+    return sessionCards[questNum.value].answer;
+  }
+
   bool isFinished(int boxId) {
     return sessionCards.isEmpty || questNum.value >= sessionCards.length;
   }
@@ -47,6 +55,16 @@ class ReviewController extends GetxController {
 
   bool totalCardsIsZero(int boxId) {
     return totalCards == 0;
+  }
+
+
+  void toggleAnswerIsRevealed(){
+    if(answerIsRevealed.value == true){
+      answerIsRevealed.value = false;
+    }else{
+      answerIsRevealed.value = true;
+    }
+
   }
 
 }

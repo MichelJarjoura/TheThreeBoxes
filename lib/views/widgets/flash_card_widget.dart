@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:three_boxes/Models/box-model.dart';
-
 import '../../constants.dart';
 import '../../controllers/review_controller.dart';
 
 class FlashCardWidget extends StatelessWidget {
-  const new({
+
+   FlashCardWidget({
     super.key,
-    required this.reviewController,
     required this.box,
   });
 
-  final ReviewController reviewController;
   final BoxModel box;
+  final reviewController = Get.find<ReviewController>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,30 +27,44 @@ class FlashCardWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Question:",
+            Obx(
+                  (){
+                    return Text(
+                   reviewController.answerIsRevealed.value == true ? "answer" : "Question",
               style: TextStyle(
                 color: AppColors.textMuted,
               ),
-            ),
+            );}
+      ),
             const Divider(
               indent: 35,
               endIndent: 35,
               thickness: 0.4,
             ),
             const SizedBox(height: 10),
-            Text(
-              reviewController.getQuestion(box.id),
+      Obx(
+          ()=>
+      Text(
+                reviewController.answerIsRevealed.value == true?
+                    reviewController.getAnswer(box.id):
+                    reviewController.getQuestion(box.id),
               style: const TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,
               ),
-            ),
+            ),),
             Spacer(),
-            Center(child: OutlinedButton(onPressed: (){}, child: Text("reveal answer",
+            Center(child: OutlinedButton(onPressed: ()=> reviewController.toggleAnswerIsRevealed(),
+                child:
+                Obx(
+                  ()=>Text(
+                  reviewController.answerIsRevealed.value == true?
+              "return to question":"reveal answer",
             style: TextStyle(
               color:AppColors.textMuted
-            ),)))
+            ),)
+            ),
+            ))
           ],
         ),
       ),

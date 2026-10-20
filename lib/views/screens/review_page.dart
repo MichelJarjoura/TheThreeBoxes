@@ -8,12 +8,13 @@ import 'package:three_boxes/views/widgets/primary_button.dart';
 
 class ReviewPage extends StatelessWidget {
   final BoxModel box;
+  final reviewController = Get.put(ReviewController());
 
-  const ReviewPage({super.key, required this.box});
+  ReviewPage({super.key, required this.box});
 
   @override
   Widget build(BuildContext context) {
-    final reviewController = Get.put(ReviewController());
+
     reviewController.initSession(box.id);
 
     return Scaffold(
@@ -66,13 +67,12 @@ class ReviewPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 20),
-                Obx(() {
-                  return SizedBox(
+
+                   SizedBox(
                     width: double.infinity,
                     height: 500,
-                    child: FlashCardWidget(reviewController: reviewController, box: box),
-                  );
-                }),
+                    child: FlashCardWidget(box: box),
+                  ),
                 const SizedBox(height: 30),
                 Obx(() {
                   if (reviewController.totalCardsIsZero(box.id) || reviewController.isFinished(box.id)) {
