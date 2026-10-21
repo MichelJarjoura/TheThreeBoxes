@@ -4,23 +4,27 @@ import 'package:three_boxes/Models/flash_card.dart';
 import 'package:three_boxes/controllers/history_controller.dart';
 import 'package:three_boxes/core/theme/app_colors.dart';
 
-class HistoryPage extends GetView<HistoryController> {
+class HistoryPage extends StatelessWidget {
   const HistoryPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final controller = Get.isRegistered<HistoryController>()
+        ? Get.find<HistoryController>()
+        : Get.put(HistoryController());
+
     return Scaffold(
       backgroundColor: AppColors.bg,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const _HistoryHeader(),
+            _HistoryHeader(controller: controller),
             const SizedBox(height: 18),
-            const _FilterChipList(),
+            _FilterChipList(controller: controller),
             const SizedBox(height: 18),
-            const Expanded(
-              child: _HistoryCardList(),
+            Expanded(
+              child: _HistoryCardList(controller: controller),
             ),
           ],
         ),
@@ -29,8 +33,10 @@ class HistoryPage extends GetView<HistoryController> {
   }
 }
 
-class _HistoryHeader extends GetView<HistoryController> {
-  const _HistoryHeader();
+class _HistoryHeader extends StatelessWidget {
+  final HistoryController controller;
+
+  const _HistoryHeader({required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +45,27 @@ class _HistoryHeader extends GetView<HistoryController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'History',
-            style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.w800,
-              color: AppColors.text,
-            ),
+          Row(
+            children: [
+              if (Navigator.canPop(context))
+                Padding(
+                  padding: const EdgeInsets.only(right: 12),
+                  child: CloseButton(
+                    onPressed: () => Get.back(),
+                    style: ButtonStyle(
+                      backgroundColor: WidgetStateProperty.all<Color>(AppColors.surface),
+                    ),
+                  ),
+                ),
+              const Text(
+                'History',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.w800,
+                  color: AppColors.text,
+                ),
+              ),
+            ],
           ),
           const SizedBox(height: 4),
           Obx(
@@ -63,30 +83,33 @@ class _HistoryHeader extends GetView<HistoryController> {
   }
 }
 
-class _FilterChipList extends GetView<HistoryController> {
-  const _FilterChipList();
+class _FilterChipList extends StatelessWidget {
+  final HistoryController controller;
+
+  const _FilterChipList({required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 42,
-      child: Obx(
-        () => ListView.separated(
+      child: Obx(() {
+        final selectedFilter = controller.selectedFilter.value;
+        return ListView.separated(
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.symmetric(horizontal: 24),
           itemCount: HistoryController.filters.length,
           separatorBuilder: (_, _) => const SizedBox(width: 10),
           itemBuilder: (context, i) {
             final (label, value) = HistoryController.filters[i];
-            final isSelected = controller.selectedFilter.value == value;
+            final isSelected = selectedFilter == value;
             return _FilterChip(
               label: label,
               selected: isSelected,
               onTap: () => controller.setFilter(value),
             );
           },
-        ),
-      ),
+        );
+      }),
     );
   }
 }
@@ -129,8 +152,10 @@ class _FilterChip extends StatelessWidget {
   }
 }
 
-class _HistoryCardList extends GetView<HistoryController> {
-  const _HistoryCardList();
+class _HistoryCardList extends StatelessWidget {
+  final HistoryController controller;
+
+  const _HistoryCardList({required this.controller});
 
   @override
   Widget build(BuildContext context) {

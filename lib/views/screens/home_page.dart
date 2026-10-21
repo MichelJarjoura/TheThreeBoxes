@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:three_boxes/Models/box-model.dart';
 import 'package:three_boxes/core/theme/app_colors.dart';
+import 'package:three_boxes/routes/app_routes.dart';
 import 'package:three_boxes/views/widgets/add_card.dart';
 import 'package:three_boxes/views/widgets/box_card.dart';
 import 'package:three_boxes/views/widgets/start_card.dart';
-import 'package:intl/intl.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -25,22 +24,43 @@ class HomePage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(formattedDate3),
-                Text(
-                  "Hello Kinan",
-                  style: TextStyle(
-                    color: AppColors.text,
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(formattedDate3),
+                        Text(
+                          "Hello Kinan",
+                          style: const TextStyle(
+                            color: AppColors.text,
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    IconButton(
+                      onPressed: () => Get.toNamed(AppRoutes.history),
+                      icon: const Icon(Icons.history_rounded, size: 26),
+                      style: IconButton.styleFrom(
+                        backgroundColor: AppColors.surface,
+                        foregroundColor: AppColors.text,
+                        padding: const EdgeInsets.all(12),
+                      ),
+                      tooltip: 'History',
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 20),
                 const StartCard(),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: Text(
+                  child: const Text(
                     "your boxes",
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
                     ),

@@ -73,7 +73,7 @@ class FlashCardController extends GetxController {
       } else if (card.boxId == 2) {
         moveFlashCard(card, 3);
       } else {
-        deleteFlashCard(card);
+        moveFlashCard(card, 4);
       }
     } else {
       if (card.boxId == 2) {

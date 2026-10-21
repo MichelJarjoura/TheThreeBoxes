@@ -5,7 +5,10 @@ import 'package:three_boxes/controllers/flashcard_controller.dart';
 import 'package:three_boxes/core/theme/app_colors.dart';
 
 class HistoryController extends GetxController {
-  final FlashCardController flashCardController = Get.find<FlashCardController>();
+  final FlashCardController flashCardController =
+      Get.isRegistered<FlashCardController>()
+          ? Get.find<FlashCardController>()
+          : Get.put(FlashCardController(), permanent: true);
 
   final selectedFilter = Rxn<CardStatus>();
 
@@ -22,16 +25,18 @@ class HistoryController extends GetxController {
   }
 
   List<FlashCard> get filteredCards {
-    final allCards = flashCardController.flashcards;
-    if (selectedFilter.value == null) {
+    final allCards = flashCardController.flashcards.toList();
+    final filter = selectedFilter.value;
+
+    if (filter == null) {
       return allCards;
     }
     return allCards
-        .where((card) => getCardStatus(card) == selectedFilter.value)
+        .where((card) => getCardStatus(card) == filter)
         .toList();
   }
 
-  int get totalCardCount => flashCardController.getTotalCards();
+  int get totalCardCount => flashCardController.flashcards.length;
 
   CardStatus getCardStatus(FlashCard card) {
     switch (card.boxId) {
@@ -68,7 +73,7 @@ class HistoryController extends GetxController {
       case CardStatus.box3:
         return AppColors.box3;
       case CardStatus.finished:
-        return AppColors.surface;
+        return const Color(0xFFE5E0FA);
     }
   }
 }
