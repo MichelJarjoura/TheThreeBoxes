@@ -171,7 +171,7 @@ lib/
 ```bash
 # 1. Clone the repository
 git clone <your-repository-url>
-cd sharpen
+cd three_boxes
 
 # 2. Install dependencies
 flutter pub get
