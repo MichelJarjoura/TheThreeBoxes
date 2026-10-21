@@ -2,7 +2,7 @@
 
 <img src="/assets/icon/icon.png" alt="ThreeBox icon" width="120" height="120" />
 
-![application icon]("assets/icon/icon.png")
+![application icon]("lib/assets/icon/icon.png")
 
 # ThreeBox
 
