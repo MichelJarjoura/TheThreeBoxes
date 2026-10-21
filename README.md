@@ -15,10 +15,10 @@
 </div>
 
 <p align="center">
-  <img src="docs/screenshots/home.png" alt="Home screen" width="22%" />
-  <img src="docs/screenshots/review.png" alt="Review screen" width="22%" />
-  <img src="docs/screenshots/complete.png" alt="Session complete screen" width="22%" />
-  <img src="docs/screenshots/history.png" alt="History screen" width="22%" />
+  <img src="docs/screenshots/home.jpg" alt="Home screen 1" width="22%" />
+  <img src="docs/screenshots/complete.jpg" alt="Home screen 2" width="22%" />
+  <img src="docs/screenshots/review.jpg" alt="Review screen" width="22%" />
+  <img src="docs/screenshots/history.jpg" alt="History screen" width="22%" />
 </p>
 
 ---
