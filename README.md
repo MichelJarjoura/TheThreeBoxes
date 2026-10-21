@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="lib/assets/icon/icon.svg" alt="ThreeBox icon" width="120" height="120" />
+<img src="/assets/icon/icon.svg" alt="ThreeBox icon" width="120" height="120" />
 
 # ThreeBox
 
