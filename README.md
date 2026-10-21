@@ -15,7 +15,7 @@
 </div>
 
 <p align="center">
-  <img src="docs/screenshots/home.jpg" alt="Home screen 1" width="22%" />
+  <img src="docs/screenshots/home_page1.jpg" alt="Home screen 1" width="22%" />
   <img src="docs/screenshots/complete.jpg" alt="Home screen 2" width="22%" />
   <img src="docs/screenshots/review.jpg" alt="Review screen" width="22%" />
   <img src="docs/screenshots/history.jpg" alt="History screen" width="22%" />
