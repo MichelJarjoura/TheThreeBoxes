@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:three_boxes/bindings/initial_binding.dart';
 import 'package:three_boxes/routes/app_pages.dart';
 import 'package:three_boxes/routes/app_routes.dart';
 
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         ),
         textTheme: GoogleFonts.nunitoTextTheme(),
       ),
+      initialBinding: InitialBinding(),
       initialRoute: AppRoutes.home,
       getPages: AppPages.pages,
     );

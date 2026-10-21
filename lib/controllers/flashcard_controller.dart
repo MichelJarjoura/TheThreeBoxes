@@ -49,7 +49,7 @@ class FlashCardController extends GetxController {
 
   void addFlashCard(int boxId, String question, String answer) {
     if (question.trim().isEmpty || answer.trim().isEmpty) return;
-    flashcards.add(FlashCard(boxId, question.trim(), answer.trim()));
+    flashcards.add(FlashCard(boxId, question.trim(), answer.trim(), CardStatus.box1));
     _saveToHive();
   }
 

@@ -1,9 +1,24 @@
+enum CardStatus { box1, box2, box3, finished }
+
 class FlashCard {
   final int boxId;
   final String question;
   final String answer;
 
-  FlashCard(this.boxId, this.question, this.answer);
+  FlashCard(this.boxId, this.question, this.answer, [CardStatus? status]);
+
+  CardStatus get status {
+    switch (boxId) {
+      case 1:
+        return CardStatus.box1;
+      case 2:
+        return CardStatus.box2;
+      case 3:
+        return CardStatus.box3;
+      default:
+        return CardStatus.finished;
+    }
+  }
 
   FlashCard copyWith({
     int? boxId,
@@ -33,4 +48,3 @@ class FlashCard {
     );
   }
 }
-
