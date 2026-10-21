@@ -11,6 +11,19 @@ class HistoryController extends GetxController {
           : Get.put(FlashCardController(), permanent: true);
 
   final selectedFilter = Rxn<CardStatus>();
+  final expandedCards = <FlashCard>{}.obs;
+
+  void toggleCardExpanded(FlashCard card) {
+    if (expandedCards.contains(card)) {
+      expandedCards.remove(card);
+    } else {
+      expandedCards.add(card);
+    }
+  }
+
+  bool isCardExpanded(FlashCard card) {
+    return expandedCards.contains(card);
+  }
 
   static const filters = <(String, CardStatus?)>[
     ('All', null),
@@ -22,6 +35,10 @@ class HistoryController extends GetxController {
 
   void setFilter(CardStatus? status) {
     selectedFilter.value = status;
+  }
+
+  void deleteCard(FlashCard card) {
+    flashCardController.deleteFlashCard(card);
   }
 
   List<FlashCard> get filteredCards {
